@@ -14,12 +14,12 @@ def train_naive_bayes(X, y):
 
 def training_pipeline():
     dataset_filepath = Path.cwd() / 'fake reviews dataset.csv'
-    model_filepath = Path.cwd() / 'fake_review_NB'
+    model_filepath = Path.cwd() / 'fake_review_NB.joblib'
 
     dataset_df = read_csv(dataset_filepath)
     preprocessed_corpus = full_preprocess(dataset_df['text_'])
 
-    vectorizer = TfidfVectorizer(tokenizer=lambda s:s, lowercase=False, ngram_range=(1, 2))
+    vectorizer = TfidfVectorizer(tokenizer=lambda s:s, lowercase=False, ngram_range=(1, 2), min_df=0.05)
     X = vectorizer.fit_transform(preprocessed_corpus)
 
     y = dataset_df['label']

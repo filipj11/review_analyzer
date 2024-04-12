@@ -1,5 +1,5 @@
 import pandas as pd
-import pickle
+from joblib import dump, load
 import nltk
 
 
@@ -8,11 +8,11 @@ def read_csv(filepath):
 
 
 def load_model(filepath):
-    return pickle.load(filepath)
+    return load(filepath)
 
 
 def save_model(model, filepath):
-    pickle.dump(model, filepath)
+    dump(model, filepath)
 
 
 def download_nltk_packages():
