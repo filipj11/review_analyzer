@@ -1,8 +1,11 @@
 import nltk
 import string
+from typing import List
 
 
 class TextPreprocessor:
+    corpus: List[str] | List[List[str]]
+
     def __init__(self, corpus):
         self.corpus = corpus
 
@@ -16,7 +19,7 @@ class TextPreprocessor:
     def lowercase(self):
         self.corpus = [[token.lower() for token in item] for item in self.corpus]
 
-    def remove_punctuation(self, punctuation):
+    def remove_punctuation(self, punctuation=string.punctuation):
         self.corpus = [[token for token in item if token not in punctuation] for item in self.corpus]
 
     def lemmatize(self):
@@ -25,15 +28,17 @@ class TextPreprocessor:
 
 
 class PreprocessorManager:
+    preprocessor: TextPreprocessor
+
     def __init__(self, preprocessor):
         self.preprocessor = preprocessor
 
     def full_preprocessing(self):
         self.preprocessor.tokenize()
         self.preprocessor.lowercase()
-        self.preprocessor.remove_punctuation(string.punctuation)
+        self.preprocessor.remove_punctuation()
         self.preprocessor.lemmatize()
-        self.preprocessor.remove_stopwords("english")
+        self.preprocessor.remove_stopwords()
 
 
 def full_preprocess(reviews):
